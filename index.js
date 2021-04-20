@@ -102,6 +102,22 @@ client.connect(err => {
             res.send(items)
         })
     })
+    
+    app.get('/allOrders',(req,res) => {
+        ordersCollection.find({})
+        .toArray((err,items)=>{
+            res.send(items)
+        })
+    })
+
+    app.delete('/delete/:id',(req,res) => {
+        const id=ObjectId(req.params.id);
+        serviceCollection.findOneAndDelete({_id: id})
+        .then(result => {
+          console.log(result);
+          res.send(result.deletedCount>0)
+        })
+    })
     //   client.close();
 });
 
